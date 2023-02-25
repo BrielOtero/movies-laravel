@@ -25,12 +25,12 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/genres', function () {
-        return view('genres');
+        return view('dataviews.genres');
     })->name('genres');
 });
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/movies', function () {
-        return view('movies');
+        return view('dataviews.movies');
     })->name('movies');
 });

@@ -11,13 +11,10 @@ class Genres extends Component
     use WithPagination;
     public function render()
     {
-        $genres = Genre::where('user:id', auth()->user()->id);
-        $query = $genres->toSql();
-        $genres=$genres->paginate(10);
+        $genres = Genre::where('user_id', auth()->user()->id)->paginate(10);
 
-        return view('livewire.genres',[
-            'genres' =>$genres,
-            'query' => $query
+        return view('livewire.genres', [
+            'genres' => $genres,
         ]);
     }
 }
