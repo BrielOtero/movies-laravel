@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 use App\Models\Genre;
+use App\Models\Movie;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Movie>
@@ -23,7 +24,7 @@ class MovieFactory extends Factory
             'genre_id'=>Genre::factory(),
             'user_id'=>User::factory(),
             'name'=>$this->faker->word(),
-            'duration'=>$this->faker->randomNumber(90,120),
+            'duration'=>$this->faker->numberBetween(90,120),
             'director'=>$this->faker->word(),
             'box_office'=>$this->faker->boolean()
         ];
