@@ -10,6 +10,7 @@ use App\Models\User;
  */
 class GenreFactory extends Factory
 {
+    protected $model = Genre::class;
     /**
      * Define the model's default state.
      *

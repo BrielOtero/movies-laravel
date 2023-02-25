@@ -11,6 +11,7 @@ use App\Models\Genre;
  */
 class MovieFactory extends Factory
 {
+    protected $model = Movie::class;
     /**
      * Define the model's default state.
      *
