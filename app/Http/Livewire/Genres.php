@@ -12,13 +12,18 @@ class Genres extends Component
 
     public $search;
 
+    protected $queryString = [
+        'search' => ['except' => ''],
+    ];
+
     public function render()
     {
         $genres = Genre::where('user_id', auth()->user()->id)
             ->when($this->search, function ($query) {
                 return $query->where(function ($query) {
                     $query->where('name', 'like', '%' . $this->search . '%');
-                });
+                }
+                );
             });
 
         $genres = $genres->paginate(10);
@@ -26,7 +31,8 @@ class Genres extends Component
             'genres' => $genres,
         ]);
     }
-    public function updatingSearch(){
+    public function updatingSearch()
+    {
         $this->resetPage();
     }
 }

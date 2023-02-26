@@ -12,6 +12,10 @@ class Movies extends Component
     use WithPagination;
     public $box_office;
     public $search;
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'box_office' =>['except' => false]
+    ];
 
     public function render()
     {

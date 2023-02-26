@@ -6,7 +6,11 @@
     </div>
     <div class="mt-3">
         <div class="flex justify-between">
-            <input wire:model.debounce.300ms="search" type="search" placeholder="Search" class="shadow appear" name="">
+            <div>
+                <input wire:model.debounce.300ms="search" type="search" placeholder="Search"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    name="">
+            </div>
         </div>
         <table class="table-auto w-full">
             <thead>
