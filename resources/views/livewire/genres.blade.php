@@ -19,12 +19,12 @@
             <tbody>
                 @foreach ($genres as $genre)
                     <tr>
-                        <td class="rounded border px-4 py-2">{{$genre->id}}</td>
-                        <td class="rounded border px-4 py-2">{{$genre->name}}</td>
+                        <td class="rounded border px-4 py-2">{{ $genre->id }}</td>
+                        <td class="rounded border px-4 py-2">{{ $genre->name }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-    <div class="mt-4">{{$genres}}</div>
+    <div class="mt-4">{{ $genres }}</div>
 </div>

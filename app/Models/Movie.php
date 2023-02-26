@@ -14,4 +14,8 @@ class Movie extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+    public function scopeBoxOffice($query)
+    {
+        return $query->where('box_office', 1);
+    }
 }

@@ -5,6 +5,15 @@
         <div>Movies</div>
     </div>
     <div class="mt-3">
+        <div class="flex justify-between">
+            <div>
+                {{-- Lo rellenaremos más adelante --}}
+            </div>
+            <div class="mr-2">
+                <input type="checkbox" class="mr-2 leading.tight" name="" wire:model="box_office"/> Now at the Box Office
+            </div>
+        </div>
+
         <table class="table-auto w-full">
             <thead>
                 <tr>
@@ -24,7 +33,7 @@
                         <div class="flex items-center">Director</div>
                     </th>
                     <th class="px-4 py-2">
-                        Box Office
+                        <div class="flex items-center">Box Office</div>
                     </th>
                 </tr>
             </thead>
