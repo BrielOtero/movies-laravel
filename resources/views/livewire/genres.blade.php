@@ -5,6 +5,9 @@
         <div>Genres</div>
     </div>
     <div class="mt-3">
+        <div class="flex justify-between">
+            <input wire:model.debounce.300ms="search" type="search" placeholder="Search" class="shadow appear" name="">
+        </div>
         <table class="table-auto w-full">
             <thead>
                 <tr>

@@ -7,7 +7,7 @@
     <div class="mt-3">
         <div class="flex justify-between">
             <div>
-                {{-- Lo rellenaremos más adelante --}}
+                <input wire:model.debounce.300ms="search" type="search" placeholder="Search" class="shadow appear" name="">
             </div>
             <div class="mr-2">
                 <input type="checkbox" class="mr-2 leading.tight" name="" wire:model="box_office"/> Now at the Box Office
