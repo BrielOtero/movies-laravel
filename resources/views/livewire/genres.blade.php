@@ -16,11 +16,18 @@
             <thead>
                 <tr>
                     <th class="px-4 py-2">
-                        <div class="flex items-center">Id</div>
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('id')">Id</button>
+                            <x-sort-icon sortField="id" :sortBy="$sortBy" :sortAsc="$sortAsc" />
+                        </div>
                     </th>
                     <th class="px-4 py-2">
-                        <div class="flex items-center">Name</div>
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('name')">Name</button>
+                            <x-sort-icon sortField="name" :sortBy="$sortBy" :sortAsc="$sortAsc" />
+                        </div>
                     </th>
+                    <th class="px-4 py-2">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,10 +35,36 @@
                     <tr>
                         <td class="rounded border px-4 py-2">{{ $genre->id }}</td>
                         <td class="rounded border px-4 py-2">{{ $genre->name }}</td>
+                        <td class="rounded border px-4 py-2">
+                            <x-danger-button wire:click="confirmGenreDeletion ({{ $genre->id }})"
+                                wire:loading.attr="disabled">
+                                {{ __('Remove') }}
+                            </x-danger-button>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
     <div class="mt-4">{{ $genres }}</div>
+    <x-dialog-modal wire:model="confirmingGenreDeletion">
+        <x-slot name="title">
+            {{ __('Remove') }}
+        </x-slot>
+
+        <x-slot name="content">
+            Are you sure you want to delete this genre?
+        </x-slot>
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$toggle('confirmingGenreDeletion', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-secondary-button>
+
+            <x-danger-button class="ml-3" wire:click="deleteGenre ({{ $confirmingGenreDeletion }})"
+                wire:loading.attr="disabled">
+                {{ __('Remove') }}
+            </x-danger-button>
+        </x-slot>
+    </x-dialog-modal>
+
 </div>

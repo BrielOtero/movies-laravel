@@ -3,18 +3,24 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Movie;
 use App\Models\Genre;
-use Livewire\WithPagination;
 
 class Movies extends Component
 {
     use WithPagination;
     public $box_office;
     public $search;
+    public $sortBy = 'id';
+    public $sortAsc = true;
+    public $confirmingMovieDeletion = false;
+
     protected $queryString = [
         'search' => ['except' => ''],
-        'box_office' =>['except' => false]
+        'box_office' => ['except' => false],
+        'sortBy' => ['except' => 'id'],
+        'sortAsc' => ['except' => true]
     ];
 
     public function render()
@@ -28,10 +34,10 @@ class Movies extends Component
                         }
                 );
             })
-
             ->when($this->box_office, function ($query) {
                 return $query->boxOffice();
-            });
+            })
+            ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC');
 
         $movies = $movies->paginate(10);
         $genres = Genre::where('user_id', auth()->user()->id);
@@ -49,5 +55,19 @@ class Movies extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+    public function sortBy($field)
+    {
+        if ($field == $this->sortBy) {
+            $this->sortAsc = !$this->sortAsc;
+        }
+        $this->sortBy = $field;
+    }
+    public function confirmMovieDeletion($id){
+        $this->confirmingMovieDeletion = $id;
+    }
+    public function deleteMovie(Movie $movie){
+        $movie->delete();
+        $this->confirmingMovieDeletion = false;
     }
 }

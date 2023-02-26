@@ -21,25 +21,41 @@
             <thead>
                 <tr>
                     <th class="px-4 py-2">
-                        <div class="flex items-center">Id</div>
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('id')">Id</button>
+                            <x-sort-icon sortField="id" :sortBy="$sortBy" :sortAsc="$sortAsc" />
+                        </div>
                     </th>
                     <th class="px-4 py-2">
-                        <div class="flex items-center">Name</div>
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('name')">Name</button>
+                            <x-sort-icon sortField="name" :sortBy="$sortBy" :sortAsc="$sortAsc" />
+                        </div>
                     </th>
                     <th class="px-4 py-2">
-                        <div class="flex items-center">Genre</div>
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('genre_id')">Genre</button>
+                            <x-sort-icon sortField="genre_id" :sortBy="$sortBy" :sortAsc="$sortAsc" />
+                        </div>
                     </th>
                     <th class="px-4 py-2">
-                        <div class="flex items-center">Duration</div>
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('duration')">Duration</button>
+                            <x-sort-icon sortField="duration" :sortBy="$sortBy" :sortAsc="$sortAsc" />
+                        </div>
                     </th>
                     <th class="px-4 py-2">
-                        <div class="flex items-center">Director</div>
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('director')">Director</button>
+                            <x-sort-icon sortField="director" :sortBy="$sortBy" :sortAsc="$sortAsc" />
+                        </div>
                     </th>
                     @if (!$box_office)
                         <th class="px-4 py-2">
                             <div class="flex items-center">Box Office</div>
                         </th>
                     @endif
+                    <th class="px-4 py-2">Action</th>
 
                 </tr>
             </thead>
@@ -54,6 +70,12 @@
                         @if (!$box_office)
                             <td class="rounded border px-4 py-2">{{ $movie->box_office ? 'Yes' : 'No' }}</td>
                         @endif
+                        <td class="rounded border px-4 py-2">
+                            <x-danger-button wire:click="confirmMovieDeletion ({{ $movie->id }})"
+                                wire:loading.attr="disabled">
+                                {{ __('Remove') }}
+                            </x-danger-button>
+                        </td>
 
                     </tr>
                 @endforeach
@@ -61,4 +83,23 @@
         </table>
     </div>
     <div class="mt-4">{{ $movies }}</div>
+    <x-dialog-modal wire:model="confirmingMovieDeletion">
+        <x-slot name="title">
+            {{ __('Remove') }}
+        </x-slot>
+
+        <x-slot name="content">
+            Are you sure you want to delete this Movie?
+        </x-slot>
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$toggle('confirmingMovieDeletion', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-secondary-button>
+
+            <x-danger-button class="ml-3" wire:click="deleteMovie ({{ $confirmingMovieDeletion }})"
+                wire:loading.attr="disabled">
+                {{ __('Remove') }}
+            </x-danger-button>
+        </x-slot>
+    </x-dialog-modal>
 </div>
