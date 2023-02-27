@@ -7,13 +7,12 @@
     <div class="mt-3">
         <div class="flex justify-between">
             <div>
-                <input wire:model.debounce.300ms="search" type="search" placeholder="Search"
+                <input wire:model.debounce.300ms="search" type="search" placeholder="{{__("Search")}}"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     name="">
             </div>
             <div class="mr-2">
-                <input type="checkbox" class="mr-2 leading.tight" name="" wire:model="box_office" /> Now at the
-                Box Office
+                <input type="checkbox" class="mr-2 leading.tight" name="" wire:model="box_office" /> {{ __('Now at the Box Office') }}
             </div>
         </div>
 
@@ -28,31 +27,31 @@
                     </th>
                     <th class="px-4 py-2">
                         <div class="flex items-center">
-                            <button wire:click="sortBy('name')">Name</button>
+                            <button wire:click="sortBy('name')">{{ __('Name') }}</button>
                             <x-sort-icon sortField="name" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                         </div>
                     </th>
                     <th class="px-4 py-2">
                         <div class="flex items-center">
-                            <button wire:click="sortBy('genre_id')">Genre</button>
+                            <button wire:click="sortBy('genre_id')">{{ __('Genre') }}</button>
                             <x-sort-icon sortField="genre_id" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                         </div>
                     </th>
                     <th class="px-4 py-2">
                         <div class="flex items-center">
-                            <button wire:click="sortBy('duration')">Duration</button>
+                            <button wire:click="sortBy('duration')">{{ __('Duration') }}</button>
                             <x-sort-icon sortField="duration" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                         </div>
                     </th>
                     <th class="px-4 py-2">
                         <div class="flex items-center">
-                            <button wire:click="sortBy('director')">Director</button>
+                            <button wire:click="sortBy('director')">{{ __('Director') }}</button>
                             <x-sort-icon sortField="director" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                         </div>
                     </th>
                     @if (!$box_office)
                         <th class="px-4 py-2">
-                            <div class="flex items-center">Box Office</div>
+                            <div class="flex items-center">{{ __('Box Office') }}</div>
                         </th>
                     @endif
 
@@ -67,7 +66,7 @@
                         <td class="rounded border px-4 py-2">{{ $movie->duration }}</td>
                         <td class="rounded border px-4 py-2">{{ $movie->director }}</td>
                         @if (!$box_office)
-                            <td class="rounded border px-4 py-2">{{ $movie->box_office ? 'Yes' : 'No' }}</td>
+                            <td class="rounded border px-4 py-2">{{ $movie->box_office ? __('Yes') : __('No') }}</td>
                         @endif
                     </tr>
                 @endforeach

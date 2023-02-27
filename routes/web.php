@@ -46,10 +46,3 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     })->name('all-genres');
 });
 
-Route::get('/all-movies', function () {
-    return view('content.all-movies');
-})->name('all-movies');
-
-Route::get('/all-genres', function () {
-    return view('content.all-genres');
-})->name('all-genres');
