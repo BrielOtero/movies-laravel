@@ -23,6 +23,14 @@
                     <x-nav-link href="{{ route('movies') }}" :active="request()->routeIs('movies')">
                         {{ __('Movies') }}
                     </x-nav-link>
+
+                    <x-nav-link href="{{ route('all-movies') }}" :active="request()->routeIs('all-movies')">
+                        {{ __('All Movies') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="{{ route('all-genres') }}" :active="request()->routeIs('all-genres')">
+                        {{ __('All Genres') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -155,6 +163,14 @@
 
             <x-responsive-nav-link href="{{ route('movies') }}" :active="request()->routeIs('movies')">
                 {{ __('Movies') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('all-movies') }}" :active="request()->routeIs('all-movies')">
+                {{ __('All Movies') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('all-genres') }}" :active="request()->routeIs('all-genres')">
+                {{ __('All Genres') }}
             </x-responsive-nav-link>
         </div>
 

@@ -17,8 +17,8 @@ class Genres extends Component
     public $confirmingGenreDeletion = false;
     public $confirmingGenreAdd = false;
 
-    protected $rules =[
-        'genre.name' =>'required|string|min:4'
+    protected $rules = [
+        'genre.name' => 'required|string|min:4'
     ];
 
     protected $queryString = [
