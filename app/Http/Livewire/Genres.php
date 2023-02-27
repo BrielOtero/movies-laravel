@@ -13,8 +13,13 @@ class Genres extends Component
     public $search;
     public $sortBy = 'id';
     public $sortAsc = true;
+    public $genre;
     public $confirmingGenreDeletion = false;
+    public $confirmingGenreAdd = false;
 
+    protected $rules =[
+        'genre.name' =>'required|string|min:4'
+    ];
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -50,11 +55,35 @@ class Genres extends Component
         }
         $this->sortBy = $field;
     }
-    public function confirmGenreDeletion($id){
+    public function confirmGenreDeletion($id)
+    {
         $this->confirmingGenreDeletion = $id;
     }
-    public function deleteGenre(Genre $genre){
+    public function deleteGenre(Genre $genre)
+    {
         $genre->delete();
         $this->confirmingGenreDeletion = false;
+    }
+    public function confirmGenreAdd()
+    {
+        $this->reset(['genre']);
+        $this->confirmingGenreAdd = true;
+    }
+    public function addGenre()
+    {
+        $this->validate();
+        if (isset($this->genre->id)) {
+            $this->genre->save();
+        } else {
+            auth()->user()->genres()->create([
+                'name' => $this->genre['name']
+            ]);
+        }
+        $this->confirmingGenreAdd = false;
+    }
+    public function confirmGenreEdit(Genre $genre)
+    {
+        $this->genre = $genre;
+        $this->confirmingGenreAdd = true;
     }
 }

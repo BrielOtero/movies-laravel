@@ -1,8 +1,13 @@
 <div class="p-2 lg:p-8 bg-white border-b border-gray-200">
     <x-application-logo class="block h-12 w-auto" />
 
-    <div class="mt-4 text-2xl font-medium text-gray-900">
-        <div>Movies</div>
+    <div class="mt-4 text-2xl font-medium text-gray-900 flex justify-between">
+        <div>{{ __('Movies') }}</div>
+        <div class="mr-2">
+            <x-add-button wire:click="confirmMovieAdd">
+                {{ __('Add') }}
+            </x-add-button>
+        </div>
     </div>
     <div class="mt-3">
         <div class="flex justify-between">
@@ -71,10 +76,8 @@
                             <td class="rounded border px-4 py-2">{{ $movie->box_office ? 'Yes' : 'No' }}</td>
                         @endif
                         <td class="rounded border px-4 py-2">
-                            <x-danger-button wire:click="confirmMovieDeletion ({{ $movie->id }})"
-                                wire:loading.attr="disabled">
-                                {{ __('Remove') }}
-                            </x-danger-button>
+                            <x-edit-button wire:click="confirmMovieEdit ({{ $movie->id }})">{{ __('Edit') }}</x-edit-button>
+                            <x-danger-button wire:click="confirmMovieDeletion ({{ $movie->id }})" wire:loading.attr="disabled">{{ __('Remove') }}</x-danger-button>
                         </td>
 
                     </tr>
@@ -100,6 +103,63 @@
                 wire:loading.attr="disabled">
                 {{ __('Remove') }}
             </x-danger-button>
+        </x-slot>
+    </x-dialog-modal>
+
+    <x-dialog-modal wire:model="confirmingMovieAdd">
+        <x-slot name="title">
+            {{ isset($this->movie->id) ? __('Edit movie') : __('Add movie') }}
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="col-span-6 sm:col-span-4 mt-4">
+                <x-label for="name" value="{{ __('Name') }}" />
+                <x-input id="movie.name" type="text" class="mt-1 block w-full" wire:model.defer="movie.name" />
+                <x-input-error for="movie.name"  class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4 mt-4">
+                <x-label for="name" value="{{ __('Genre id') }}" />
+                <select name="genre_id" wire:model.defer="movie.genre_id">
+                    <option value="">-- Select One --</option>
+                    @foreach ($genres as $genre)
+                        <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+                    @endforeach
+                </select>
+                <x-input-error for="movie.genre_id" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4 mt-4">
+                <x-label for="name" value="{{ __('Duration') }}" />
+                <x-input id="movie.duration" type="number" class="mt-1 block w-full"
+                    wire:model.defer="movie.duration" />
+                <x-input-error for="movie.duration" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4 mt-4">
+                <x-label for="name" value="{{ __('Director') }}" />
+                <x-input id="movie.director" type="text" class="mt-1 block w-full"
+                    wire:model.defer="movie.director" />
+                <x-input-error for="movie.director" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4 mt-4">
+                <input type="checkbox" wire:model.defer="movie.box_office" />
+                <span class="ml-2 text-sm text-gray-600">{{ __('Box Office') }}</span>
+
+            </div>
+        </x-slot>
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$toggle('confirmingMovieAdd', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-secondary-button>
+
+            @if (isset($this->movie->id))
+            <x-edit-button class="ml-3" wire:click="addMovie ()" wire:loading.attr="disabled">
+                {{ __('Save changes') }}
+            </x-edit-button>
+            @else
+                <x-add-button class="ml-3" wire:click="addMovie ()" wire:loading.attr="disabled">
+                    {{ __('Add') }}
+                </x-add-button>
+            @endif
+
         </x-slot>
     </x-dialog-modal>
 </div>

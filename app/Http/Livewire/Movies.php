@@ -14,7 +14,17 @@ class Movies extends Component
     public $search;
     public $sortBy = 'id';
     public $sortAsc = true;
+    public $movie;
     public $confirmingMovieDeletion = false;
+    public $confirmingMovieAdd = false;
+
+    protected $rules = [
+        'movie.genre_id' => 'required|int|min:1',
+        'movie.name' => 'required|string|min:4',
+        'movie.duration' => 'required|int|between:1,1000',
+        'movie.director' => 'required|string|min:4',
+        'movie.box_office' => 'boolean',
+    ];
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -40,11 +50,11 @@ class Movies extends Component
             ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC');
 
         $movies = $movies->paginate(10);
-        $genres = Genre::where('user_id', auth()->user()->id);
+        $genres = Genre::where('user_id', auth()->user()->id)->get();
 
         return view('livewire.movies', [
             'movies' => $movies,
-            'genres' => $genres
+            'genres' => $genres,
         ]);
     }
 
@@ -63,11 +73,40 @@ class Movies extends Component
         }
         $this->sortBy = $field;
     }
-    public function confirmMovieDeletion($id){
+    public function confirmMovieDeletion($id)
+    {
         $this->confirmingMovieDeletion = $id;
     }
-    public function deleteMovie(Movie $movie){
+    public function deleteMovie(Movie $movie)
+    {
         $movie->delete();
         $this->confirmingMovieDeletion = false;
+    }
+    public function confirmMovieAdd()
+    {
+        $this->reset(['movie']);
+        $this->confirmingMovieAdd = true;
+    }
+    public function addMovie()
+    {
+        $this->validate();
+        if (isset($this->movie->id)) {
+            $this->movie->save();
+        } else {
+            auth()->user()->movies()->create([
+                'genre_id' => $this->movie['genre_id'],
+                'name' => $this->movie['name'],
+                'duration' => $this->movie['duration'],
+                'director' => $this->movie['director'],
+                'box_office' => $this->movie['box_office'] ?? 0
+            ]);
+        }
+        $this->confirmingMovieAdd = false;
+    }
+
+    public function confirmMovieEdit(Movie $movie)
+    {
+        $this->movie = $movie;
+        $this->confirmingMovieAdd = true;
     }
 }

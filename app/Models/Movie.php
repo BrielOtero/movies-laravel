@@ -9,7 +9,7 @@ use App\Models\User;
 class Movie extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','duration','director','box_office'];
+    protected $fillable = ['genre_id','name','duration','director','box_office'];
 
     public function user() {
         return $this->belongsTo(User::class);
